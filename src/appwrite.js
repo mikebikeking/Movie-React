@@ -41,5 +41,8 @@ export const getTrendingMovies = async () => {
       Query.orderDesc("count"),
     ]);
     return result.documents;
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error fetching trending movies from Appwrite:", error);
+    return [];
+  }
 };
