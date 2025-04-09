@@ -1,1 +1,1 @@
-web: npm start
+web: echo "Starting with: npm start" && npm start
