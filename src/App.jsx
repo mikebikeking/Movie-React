@@ -89,32 +89,43 @@ const App = () => {
           </h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
-        {trendingMovies.length > 0 && (
+        {console.log("trendingMovies before render:", trendingMovies)}
+        {trendingMovies && trendingMovies.length > 0 && (
           <section className="trending">
             <h2>Trending Movies</h2>
             <ul>
-              {trendingMovies.map((movie, index) => (
-                <li key={movie.$id}>
-                  <p>{index + 1}</p>
-                  <img src={movie.poster_url} alt={movie.title} />
-                </li>
-              ))}
+              {trendingMovies.map((movie, index) => {
+                console.log("Trending Movie Item:", movie);
+                return (
+                  <li key={movie?.$id}> {/* Added optional chaining */}
+                    <p>{index + 1}</p>
+                    <img src={movie?.poster_url} alt={movie?.title} /> {/* Added optional chaining */}
+                  </li>
+                );
+              })}
             </ul>
           </section>
         )}
         <section className="all-movies">
           <h2>All Movies</h2>
-
           {isLoading ? (
             <Spinner />
           ) : errorMessage ? (
             <p className="text-red-500">{errorMessage}</p>
           ) : (
-            <ul>
-              {movieList.map((movie) => (
-                <MovieCard key={MovieCard.id} movie={movie} />
-              ))}
-            </ul>
+            <>
+              {console.log("movieList before render:", movieList)}
+              {movieList && movieList.length > 0 ? (
+                <ul>
+                  {movieList.map((movie) => {
+                    console.log("MovieCard Item:", movie);
+                    return <MovieCard key={movie?.id} movie={movie} />; {/* Added optional chaining */}
+                  })}
+                </ul>
+              ) : (
+                <p>No movies found.</p>
+              )}
+            </>
           )}
         </section>
       </div>
