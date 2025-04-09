@@ -38,6 +38,7 @@ const App = () => {
       const response = await fetch(endpoint, API_OPTIONS);
 
       if (!response.ok) {
+        console.error(`TMDB API Error: Status ${response.status}`);
         throw new Error("Failed to fetch movies");
       }
 
@@ -66,6 +67,7 @@ const App = () => {
       setTrendingMovies(movies);
     } catch (error) {
       console.error(`Error fetching trending movies: ${error}`);
+      setTrendingMovies([]); // Set to empty array on error
     }
   };
 
@@ -97,9 +99,9 @@ const App = () => {
               {trendingMovies.map((movie, index) => {
                 console.log("Trending Movie Item:", movie);
                 return (
-                  <li key={movie?.$id}> {/* Added optional chaining */}
+                  <li key={movie?.$id}>
                     <p>{index + 1}</p>
-                    <img src={movie?.poster_url} alt={movie?.title} /> {/* Added optional chaining */}
+                    <img src={movie?.poster_url} alt={movie?.title} />
                   </li>
                 );
               })}
@@ -119,7 +121,7 @@ const App = () => {
                 <ul>
                   {movieList.map((movie) => {
                     console.log("MovieCard Item:", movie);
-                    return <MovieCard key={movie?.id} movie={movie} />; {/* Added optional chaining */}
+                    return <MovieCard key={movie?.id} movie={movie} />;
                   })}
                 </ul>
               ) : (
